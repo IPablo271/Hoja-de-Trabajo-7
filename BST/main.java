@@ -1,3 +1,7 @@
+//Universidad del valle de Guatemala
+//Nombre: Pablo Daniel Gonzalez Ramos
+//Carnet: 20362
+//Clase main para la implementación de la hoja de trabajo 7.
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -27,34 +31,35 @@ public class main {
         ArrayList<Association> Inglesfrances=new ArrayList<>();
         ArrayList<Association> FrancesEspanol=new ArrayList<>();
         ArrayList<Association> FrancesIngles=new ArrayList<>();
-        System.out.println("Bienvenido al programa");
-        //Stacks Creados con el sentido que almacenen las diferentes associciones de tal manera que se visualizar las diferentes traducciones
+        //Listas que ayudan a la manipulacion de los datos que entran a lo largo del programa
         File file=new File("palabras.txt");
         File file2=new File("oracion.txt");
-        Scanner scan3=new Scanner(file2);
-        Scanner scan=new Scanner(file);
+        Scanner scan3=new Scanner(file2);//Se recibe el primer archivo que contiene las palabras
+        Scanner scan=new Scanner(file);//Se recibe el segundo archivo que contiene las
         String filecontent="";
         while(scan.hasNext()){
             filecontent=filecontent.concat(scan.nextLine()+"\n");
         }
-        String[] arr=filecontent.split("\n");
+
+        String[] arr=filecontent.split("\n");//Dividir el primer archivo en una lista donde el parametro de division es cada linea
         for(int i=0;i<arr.length;i++){
             String a=arr[i];
             primeradivision.add(a);
         }
-        for(int c=0;c<primeradivision.size();c++){
+        for(int c=0;c<primeradivision.size();c++){//Dividir cada en linea en las 3 palabras que contiene el archivo.
             String a=primeradivision.get(c);
             String[] arr2=a.split(",");
             segundadivision.add(arr2);
         }
         for(int i=0;i<segundadivision.size();i++){
-            String sublista[]=segundadivision.get(i);
-            String uno=sublista[0];
+            String sublista[]=segundadivision.get(i);//Crear una sublista
+            String uno=sublista[0];//Agregar la primera palabra a
             String dos=sublista[1];
             String tres=sublista[2];
             palabras1.add(uno);
             palabras2.add(dos);
             palabras3.add(tres);
+            //Crear las difrentes combinaciones de palabras que pueden existir
             HashMap<String,String> mapa1=new HashMap<>();
             HashMap<String,String> mapa12=new HashMap<>();
 
@@ -90,8 +95,6 @@ public class main {
             FrancesIngles.add(franceesingles);
 
         }
-        int cantidadtp=palabras1.size()+palabras2.size()+palabras3.size();
-        int v=0;
         for(int i=0;i<ingles.size();i=i+2){
            HashMap c =ingles.get(i);
            HashMap d=ingles.get(i+1);
@@ -136,26 +139,26 @@ public class main {
             Association b=new Association(a,maj);
             ListaFinalfrances.add(b);
         }
-
-
+        
+        //Creae los arboles binarios para su uso
         BinaryTree<Association> arbolIngles=new BinaryTree<Association>(ListaFinalset.get(0));
         BinaryTree<Association> arbolespanol=new BinaryTree<Association>(ListaFinalespanol.get(0));
         BinaryTree<Association> arbolfrances=new BinaryTree<Association>(ListaFinalfrances.get(0));
-
+        //Agregar las difrentes palabras a los arboles binarios
         for (int n = 0; n < ListaFinalset.size(); n++) {
             if ((n+1) < ListaFinalset.size()) {
                 BinaryTree<Association> btSiguiente = new BinaryTree<>(ListaFinalset.get(n+1));
                 BinaryTree.agregar(arbolIngles, btSiguiente);
             }
         }
-        System.out.print("\n Este es el arbol binario in order: "+arbolIngles.inOrder(arbolIngles));
+        System.out.print("\n Este es el arbol binario in order: "+arbolIngles.inOrder(arbolIngles));//Print del arbol binario in order
         String contenido="";
         while(scan3.hasNext()){
             contenido=contenido.concat(scan3.nextLine()+"\n");
         }
         System.out.print(contenido);
         ArrayList<String> subdivision=new ArrayList<>();
-        String[] arr2=contenido.split(" ");
+        String[] arr2=contenido.split(" ");//Dividir el archivo 2 por cada espacio que exista
         for(int i=0;i<arr2.length;i++){
             String a=arr2[i];
             String b=a.toLowerCase();
@@ -163,7 +166,8 @@ public class main {
         }
         boolean rungeneral=true;
 
-        while(rungeneral){
+        while(rungeneral){//While para la traduccion
+            //Menu de ingreso al programa
             System.out.print("\nBienvenido al programa");
             System.out.print("\nIngrese la opcion que desee");
             System.out.print("\nEn que idioma esta el archivo que desea traducir");
@@ -173,15 +177,17 @@ public class main {
             System.out.print("\n4.Terminar el programa");
             System.out.print("\nSeleccione su opcion: ");
             int a=scan2.nextInt();
-            if(a==1){
+            if(a==1){//OPCION 1
                 boolean subrun=true;
                 while(subrun){
+                    //Submenu para verificar a que idioma quiere traducir
                     System.out.print("\nA que idioma quiere traducir su archivo");
                     System.out.print("\n1. Ingles");
                     System.out.print("\n2. Frances");
                     System.out.print("\nIngrese su opcion: ");
                     int h=scan2.nextInt();
                     if(h==1){
+                        //Se crea el arbol binario y luego se busca las palabras individualmente para luego producir oracion traducida
                         System.out.print("Traduccion espanol ingles");
                         BinaryTree<Association> Arbol1=new BinaryTree<Association>(EspanolIngles.get(0));
                         for (int n = 0; n < EspanolIngles.size(); n++) {
@@ -205,6 +211,7 @@ public class main {
                         subrun=false;
                     }
                     if(h==2){
+                        //Se crea el arbol binario y luego se busca las palabras individualmente para luego producir oracion traducida
                         System.out.print("Traduccion espanol frances");
                         BinaryTree<Association> Arbol1=new BinaryTree<Association>(EspanolFrances.get(0));
                         for (int n = 0; n < EspanolFrances.size(); n++) {
@@ -236,12 +243,14 @@ public class main {
             if(a==2){
                 boolean subrun=true;
                 while(subrun){
+                    //Sub menu para verificar a que idioma quiere traducir
                     System.out.print("\nA que idioma quiere traducir su archivo");
                     System.out.print("\n1. Espanol");
                     System.out.print("\n2. Frances");
                     System.out.print("\nIngrese su opcion: ");
                     int h=scan2.nextInt();
                     if(h==1){
+                        //Se crea el arbol binario y luego se busca las palabras individualmente para luego producir oracion traducida
                         System.out.print("Traduccion ingles espanol");
                         BinaryTree<Association> Arbol1=new BinaryTree<Association>(InglesEspanol.get(0));
                         for (int n = 0; n < InglesEspanol.size(); n++) {
@@ -265,6 +274,7 @@ public class main {
                         subrun=false;
                     }
                     if(h==2){
+                        //Se crea el arbol binario y luego se busca las palabras individualmente para luego producir oracion traducida
                         BinaryTree<Association> Arbol1=new BinaryTree<Association>(Inglesfrances.get(0));
                         for (int n = 0; n < Inglesfrances.size(); n++) {
                             if ((n+1) < Inglesfrances.size()) {
@@ -295,12 +305,14 @@ public class main {
             if(a==3){
                 boolean subrun=true;
                 while(subrun){
+                    //Submenu para la verificar a que idioma quiere traudcir.
                     System.out.print("\nA que idioma quiere traducir su archivo");
                     System.out.print("\n1. Espanol");
                     System.out.print("\n2. Ingles");
                     System.out.print("\nIngrese su opcion: ");
                     int h=scan2.nextInt();
                     if(h==1){
+                        //Se crea el arbol binario y luego se busca las palabras individualmente para luego producir oracion traducida
                         System.out.print("Traduccion frances espanol");
                         BinaryTree<Association> Arbol1=new BinaryTree<Association>(FrancesEspanol.get(0));
                         for (int n = 0; n < FrancesEspanol.size(); n++) {
@@ -324,6 +336,7 @@ public class main {
                         subrun=false;
                     }
                     if(h==2){
+                        //Se crea el arbol binario y luego se busca las palabras individualmente para luego producir oracion traducida
                         System.out.print("Traduccion frances ingles");
                         BinaryTree<Association> Arbol1=new BinaryTree<Association>(FrancesIngles.get(0));
                         for (int n = 0; n < FrancesIngles.size(); n++) {
@@ -353,10 +366,12 @@ public class main {
 
             }
             if(a==4){
+                //Opcion para salir del programa
                 System.out.print("Saliendo del programa");
                 break;
             }
             else{
+                //Opcion para manejo de errores
                 System.out.print("Ingrese una opcion valida");
             }
         }
